@@ -86,7 +86,7 @@ for ppt in ['608']:
     if not no_mobile:
         m_df_5sec = get_mobile_data(path_mobile, num_days, ppt, ppt_mobile)
 
-    ###### MOBILE DATA    
+    ###### ACTIVITY DATA    
     pa_data = pd.read_csv(pa_fpath, delimiter=',')
     pa_data = pa_data[['DateTime','Non-Wear Time/Wear Time','Hand-Scored Wake/Sleep','Sadeh Wake/Sleep','PA Chandler 2015 8-12 yo S-L-MVPA VM']]
     pa_data.rename(columns={'Non-Wear Time/Wear Time': 'WearTime', 'Hand-Scored Wake/Sleep': 'HndScrSlp', 'Sadeh Wake/Sleep':'SadehSlp', 'PA Chandler 2015 8-12 yo S-L-MVPA VM':'ChandlerMVPA'}, inplace=True)
@@ -110,16 +110,13 @@ for ppt in ['608']:
         
         day_df = merged_df[start_dts:end_dts]
         
+        # mobile data 
         if tv_present: 
             tv1_plot_data = plot_tv_col(day_df, 'tv1') #[gzf, exf, missf, downf]
             tv2_plot_data = plot_tv_col(day_df, 'tv2')
             tv3_plot_data = plot_tv_col(day_df, 'tv3')
             tv_plot_data = tv1_plot_data + tv2_plot_data + tv3_plot_data
-        
-        #activity data
-        act_data, act_miss = plot_activity(day_df)
-        act_miss = act_miss*act_miss_rep
-        
+
         # mobile data 
         if not no_mobile:
             day_mdf = m_df_5sec[start_dts:end_dts]
@@ -130,9 +127,12 @@ for ppt in ['608']:
             m_colors = ['olivedrab','yellowgreen']
             m_offset = [0]*2
         
+        #activity data
+        act_data, act_miss = plot_activity(day_df)
+        act_miss = act_miss*act_miss_rep
+        
         
         # plot the bar graphs
-        
         title = '%s ScreenTime, %s, %s'%(ppt, date.day_name()[:3], date.date())
         fname = '%s ScreenTime, %s'%(ppt, date.date())
         matplotlib.rcParams['font.size'] = 11.0
