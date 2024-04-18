@@ -36,7 +36,7 @@ plt_labels = ['Mobile','TV','Wear-Time','Sleep Scr', 'Sedentary', 'Light', 'MVPA
 path = '/home/akv/FLASH_PO1/tech_data_post_processed/study4_tv_output'
 path_pa = '/home/akv/FLASH_PO1/tech_data_post_processed/study4_pa_data'
 path_mobile = '/home/akv/FLASH_PO1/tech_data_post_processed/study4_mobile_output'
-mobile_details = '/home/akv/FLASH_PO1/flash-tv-post-processing/study4_mobile_details.csv'
+mobile_details = './study4_mobile_details.csv'
 
 mobile_details = pd.read_csv(mobile_details, delimiter=',')
 num_days=3
@@ -164,7 +164,7 @@ for ppt in ['608']:
         plt.ylim(-1.0,7.0)
         plt.title(title)
         #plt.show()
-        plt.savefig(fname+'.png')
+        plt.savefig('./plots/'+fname+'.png')
         #plt.close()
     
 
