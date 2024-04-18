@@ -8,8 +8,8 @@ import yaml
 from datetime import timedelta
 
 #path = '/home/akv/FLASH_PO1/flash-tv-post-processing/data/output'
-path_mobile = '/home/akv/FLASH_PO1/flash-tv-post-processing/data/study4_mobile_old'
-mobile_details = '/home/akv/FLASH_PO1/flash-tv-post-processing/study4_mobile_details.csv'
+path_mobile = '/home/akv/FLASH_PO1/tech_data_post_processed/study4_mobile_old'
+mobile_details = './study4_mobile_details.csv'
 num_days=3
 
 df = pd.read_csv(mobile_details, delimiter=',')
@@ -23,10 +23,9 @@ for idx in df.index:
         type_ = row['mobile_type']
         count = row['mobile_count']
         csv_path = None
-
+        
         if type_ == 'Android':
             csv_path = '%s/%s_chronicle_android.csv'%(path_mobile,str(ppt))
-            csv_path = None
             save_path = '%s/%s_android_final.csv'%(path_mobile,str(ppt))
         
         if type_ == 'iPhone':
@@ -38,6 +37,7 @@ for idx in df.index:
 
         if type_ == 'iPad':
             csv_path = '%s/%s_ipad_data.csv'%(path_mobile,str(ppt))
+            csv_path = None
             if ppt in [577,598]:
                 csv_path = None
             save_path = '%s/%s_ipad_final.csv'%(path_mobile,str(ppt))
@@ -61,7 +61,11 @@ for idx in df.index:
         m_df = m_df[start_dts:end_dts]
         if 'index' in m_df.columns:
             m_df.drop(columns=['index'],inplace=True)
+            
+        m_df.username = m_df.username.astype(str)
+        m_df.username = m_df.username.apply(lambda x : "None" if x=="nan" else x)
         m_df.to_csv(save_path, sep=',') 
+        
         
         for day_ in range(num_days):
             start_dts = pd.to_datetime(start_date) #+ timedelta(days=day)
