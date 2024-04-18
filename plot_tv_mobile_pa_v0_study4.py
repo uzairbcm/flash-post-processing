@@ -46,7 +46,7 @@ ppts.sort()
 
 #ppts_int = [int(p) for p in ppts]
 #ppts[:1]
-for ppt in ['578']:
+for ppt in ['608']:
 
     ###### TV DATA    
     # read yaml

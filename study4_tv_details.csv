@@ -1,4 +1,5 @@
 ppt_id,date,tvcount,tv1 location,tv1 exclude,tv1 notes,tv2 location,tv2 exclude,tv2 notes
+567,2023-01-28,1,Living room,TRUE,None,None,None,None
 568,2023-02-07,2,Living room,FALSE,None,Dining room,FALSE,None
 577,2023-03-23,1,Living room,FALSE,None,None,None,None
 578,2023-03-25,2,Living room,FALSE,None,Play room,FALSE,None
@@ -6,7 +7,7 @@ ppt_id,date,tvcount,tv1 location,tv1 exclude,tv1 notes,tv2 location,tv2 exclude,
 580,2023-04-05,1,Living room,FALSE,None,None,None,None
 581,2023-04-12,2,Living room,FALSE,None,Child bedroom,FALSE,None
 582,2023-04-29,2,Child bedroom,FALSE,None,Playroom,FALSE,None
-590,2023-06-24,1,Upstairs family room,FALSE,Motorola-childonly,Samsung-shared,None,None
+590,2023-06-24,1,Upstairs family room,FALSE,None,None,None,None
 591,2023-06-30,2,Living room,FALSE,None,Child bedroom,FALSE,None
 592,2023-07-06,1,Living room,FALSE,None,None,None,None
 595,2023-07-19,1,Child bedroom,FALSE,None,None,None,None

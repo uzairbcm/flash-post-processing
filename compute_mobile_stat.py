@@ -33,7 +33,7 @@ for idx in df.index:
             csv_path = None
             if ppt == 591:
                 csv_path = None
-            save_path = '%s/%s_ios_final.csv'%(path_mobile,str(ppt))
+            save_path = '%s/%s_iphone_final.csv'%(path_mobile,str(ppt))
 
         if type_ == 'iPad':
             csv_path = '%s/%s_ipad_data.csv'%(path_mobile,str(ppt))

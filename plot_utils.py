@@ -128,8 +128,7 @@ def get_mobile_data(path_mobile, num_days, ppt, ppt_mobile):
     m_df_5sec = pd.DataFrame(index=pd.date_range(start=start_dts, end=end_dts, freq='5S'))
     
     for dev in range(count):
-            
-        mpath = '%s/%s_%s_final.csv'%(path_mobile,ppt,type_[0].lower())
+        mpath = '%s/%s_%s_final.csv'%(path_mobile,ppt,type_[dev].lower())
         m_df = pd.read_csv(mpath, delimiter=',')
         m_df['event_timestamp'] = pd.to_datetime(m_df['event_timestamp']).dt.tz_localize(None)
         m_df.set_index('event_timestamp', inplace=True)

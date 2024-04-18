@@ -37,7 +37,7 @@
 #######  iOS (iPhone) file structure ######
 ###########################################
 
-----> FileName: 581_ios_final.csv
+----> FileName: 581_iphone_final.csv
 
     -> Contains Mobile screen use, with apps start and stop time of the usage
     -> NOTE: For iPhones, the exact start and stop times of the app use are not available, only the durations are reported within a 15 minute epoch
