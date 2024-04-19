@@ -12,7 +12,7 @@ ppt_id,date,tvcount,tv1 location,tv1 exclude,tv1 notes,tv2 location,tv2 exclude,
 592,2023-07-06,1,Living room,FALSE,None,None,None,None
 595,2023-07-19,1,Child bedroom,FALSE,None,None,None,None
 596,2023-07-22,1,Living room,FALSE,None,None,None,None
-597,2023-08-07,1,Living room,FALSE,None,None,None,None
+597,2023-08-08,1,Living room,FALSE,None,None,None,None
 598,2023-08-10,1,Living room,FALSE,None,None,None,None
 600,2023-08-19,2,Child bedroom console,FALSE,None,Child bedroom desk,FALSE,None
 601,2023-09-01,1,Playroom,FALSE,None,None,None,None

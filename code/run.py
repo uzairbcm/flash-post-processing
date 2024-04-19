@@ -41,12 +41,12 @@ if not study4:
     tv_count_ls = [0,1,2,3]
     tv_count = ppt_data.iloc[0]['tvcount'] 
     tv_count = tv_count_ls[tv_count-1]
-    with open('../data/input/configs/%s.yaml'%ppt_id) as stream:
+    with open('../../tech_data_post_processed/input/configs/%s.yaml'%ppt_id) as stream:
         tv_config = yaml.safe_load(stream)    
         #print(tv_config)
 else:
     num_days = 3
-    with open('../data/input/configs/%s.yaml'%ppt_id) as stream:
+    with open('../../tech_data_post_processed//input/configs/%s.yaml'%ppt_id) as stream:
         tv_config = yaml.safe_load(stream)    
     
     start_date = str(tv_config['start_date'])
