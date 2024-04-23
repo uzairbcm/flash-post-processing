@@ -46,8 +46,11 @@ ppts.sort()
 
 #ppts_int = [int(p) for p in ppts]
 #ppts[:1]
-for ppt in ['597']:
-
+for ppt in ['568']: #mobile_details['ppt_id']:
+    #if ppt == 567:
+    #    continue
+    #ppt = str(ppt)
+    
     ###### TV DATA    
     # read yaml
     with open('%s/%s/%s_tv_info.yaml'%(path,ppt,ppt)) as stream:
@@ -133,7 +136,7 @@ for ppt in ['597']:
         
         
         # plot the bar graphs
-        title = '%s ScreenTime, %s, %s'%(ppt, date.day_name()[:3], date.date())
+        title = 'ScreenTime Day-%02d, %s'%(day+1, date.day_name()[:3])
         fname = '%s ScreenTime, %s'%(ppt, date.date())
         matplotlib.rcParams['font.size'] = 11.0
         #fig, ax = plt.subplots(1, 1)
