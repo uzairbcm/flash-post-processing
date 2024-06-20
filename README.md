@@ -13,4 +13,8 @@ Preparing the data before running the code
    - Edit the power log `P1-1234XYZ_tv_power_5s.csv`; replace the 3 first text lines with - `power;date;time` as column names
  - Prepare the input config file
   
+Setting TV power threshold
 
+Process the logs with `run.py`
+
+Check and verify the summaries
