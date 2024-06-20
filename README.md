@@ -1,6 +1,6 @@
 # flash-post-processing
 TV, Mobile, and Physical activity processing and plot codes
-
+> Requirements - pandas, matplotlib, datetime, yaml, numpy
 
 ## FLASH-TV post-processing 
 **Preparing the data before running the code**
