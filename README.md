@@ -1,5 +1,5 @@
 # flash-post-processing
-tv, mobile and physical activity processing and plot codes
+TV, Mobile, and Physical activity processing and plot codes
 
 
 ## FLASH-TV post-processing 
@@ -25,6 +25,11 @@ Setting TV power threshold value for each value
     - Plot the TV power consumption data using `code/tv_power.py` by setting values of `file_path; start_date`
        - Infer the threshold from these plots.
 
-Process the logs with `run.py`
+Process the logs with `code/run.py`
+ - Download redcap rawdata in csv format from the redcap database
+ ```
+ cd code
+ python run.py --base_path datapath --ppt_id 1234 --datacsv redcap_rawdata.csv --output path_to post-processed-data
+ ```
 
 Check and verify the summaries
