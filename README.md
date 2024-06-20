@@ -6,7 +6,7 @@ tv, mobile and physical activity processing and plot codes
 Preparing the data before running the code
  - Create a folder `post-processed-data` to store results
    - create a folder `input/configs`
- - Create a folder with just participant ID `1234` at the local path say `datapath`
+ - Create a folder with just participant ID `1234` at the local path, say `datapath`
  - Download the participant data from the server to this folder
    - Copy each device data zip folder format: `P1-1234XYZ_data.zip` where `XYZ` is the device ID. Extract the zip files
  - In each device data folder:
@@ -17,9 +17,13 @@ Preparing the data before running the code
    - This file has a bunch of variables like
      - TV power threshold value
      - setting the power loss timestamps from the notes
-     - exclude variable for any we decided to exclude the data from a particular TV
-  
-TV power threshold
+     - exclude variable for any device where we decided to exclude the data from a particular TV        
+
+Setting TV power threshold value for each value
+ - Two steps to set the value of `power_threshold`
+    - Read the threshold from the labeled screenshots obtained from visit 1 of the data collection
+    - Plot the TV power consumption data using `code/tv_power.py` by setting values of `file_path; start_date`
+       - Infer the threshold from these plots.
 
 Process the logs with `run.py`
 
