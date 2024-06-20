@@ -1,0 +1,22 @@
+tv1:
+    device_id: null
+    power_read: null
+    power_threshold: null
+    powered_down: null
+    powered_down_data: null
+    notes: null
+tv2:
+    device_id: null
+    power_read: null
+    power_threshold: null
+    powered_down: null
+    powered_down_data: null
+    notes: null
+tv3:
+    device_id: null
+    power_read: null
+    power_threshold: null
+    powered_down: null
+    powered_down_data: null
+    notes: null
+
