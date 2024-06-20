@@ -36,4 +36,4 @@ TV, Mobile, and Physical activity processing and plot codes
 **Check the outputs and verify the summaries**
  - after running the above code, it should create a folder in `post-processed-data/output/1234/` storing the outputs
     - Inside the participant folder, you will see `1234_tv_info.yaml; 1234_tv_viewing_data.csv; tv1_summary.csv; tv2_summary.csv; tv3_summary.csv`
-    - 
+    - Check `readme_tvdata.txt` to understand the structure of these files
