@@ -40,7 +40,9 @@ def read_power_pd(file_path):
     return series 
 
 def filter_series(series, start_date, end_date):
-    ns = series[pd.to_datetime(start_date):pd.to_datetime(end_date)]
+    #ns = series[pd.to_datetime(start_date):pd.to_datetime(end_date)]
+    ns = series[series.index<=pd.to_datetime(end_date)]
+    ns = ns[ns.index>=pd.to_datetime(start_date)]
     return ns
 
 def interp_series(series, start_date, end_date, visualize=False):
@@ -66,9 +68,9 @@ def interp_series(series, start_date, end_date, visualize=False):
     return merged_df
 
 if __name__ == "__main__":
-    file_path = '/home/akv/FLASH_PO1/study4Data/597/597013_data/597013_tv_power_5s.csv'
-    start_date = '2023-07-22'
-    num_days = 3
+    file_path = '/home/akv/FLASH_PO1/techData/1373/P1-1373012_data/P1-1373012_tv_power_5s.csv'
+    start_date = '2024-05-08'
+    num_days = 5
     end_date = pd.to_datetime(start_date) + timedelta(days=num_days-1)
     
     start_date = start_date+' 00:00:00'
@@ -97,6 +99,6 @@ if __name__ == "__main__":
     days = days.set_index(['time'])
 
     #print(days)
-    days.plot(figsize=(13, 4.5), subplots=True, legend=False, ylim=(-2,60))
+    days.plot(figsize=(13, 4.5), subplots=True, legend=False, ylim=(-2,70))
     plt.savefig(file_path.split('/')[-1][:-4]+'.png')
     #plt.show()

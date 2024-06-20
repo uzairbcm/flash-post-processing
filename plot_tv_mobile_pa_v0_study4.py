@@ -46,50 +46,63 @@ ppts.sort()
 
 #ppts_int = [int(p) for p in ppts]
 #ppts[:1]
-for ppt in ['568']: #mobile_details['ppt_id']:
+for ppt in ['608']: #mobile_details['ppt_id']:
     #if ppt == 567:
     #    continue
     #ppt = str(ppt)
     
     ###### TV DATA    
-    # read yaml
-    with open('%s/%s/%s_tv_info.yaml'%(path,ppt,ppt)) as stream:
-        tv_info = yaml.safe_load(stream)    
-        
-    # get tv count
-    tv_count = tv_info['tv_count']
-    start_date = tv_info['start_date']
+    tv_present = True
+    try:
+        # read yaml
+        with open('%s/%s/%s_tv_info.yaml'%(path,ppt,ppt)) as stream:
+            tv_info = yaml.safe_load(stream)    
+    except:
+        tv_present = False
 
-    print('Partcpnt-id \t: %s'%ppt)    
-    print('Start Date \t: %s'%start_date)    
-    print('TV count \t: %d'%tv_count)
-    print('Num days \t: %d'%num_days)    
-    
-    tv_fpath = '%s/%s/%s_tv_viewing_data.csv'%(path, ppt, ppt)
-    pa_fpath = '%s/PA Scored FLASH %s.csv'%(path_pa, ppt)
-    
-    tv_data = pd.read_csv(tv_fpath, delimiter=',')
-    tv_data['dateTimeStamp'] = pd.to_datetime(tv_data['dateTimeStamp'])
-    tv_data.set_index('dateTimeStamp', inplace=True)
-    
-    # remove tv columns that are not present (cols with -1 val)
-    for col in tv_data.columns:
-        val = tv_data[col].values
-        if (val==-1).sum() > 100:
-            tv_data.drop(columns=[col],inplace=True)
-    
-    tv_present = any(['tv' in col for col in tv_data.columns])
+    if tv_present:
+        # get tv count
+        tv_count = tv_info['tv_count']
+        start_date = tv_info['start_date']
+
+        print('Partcpnt-id \t: %s'%ppt)    
+        print('Start Date \t: %s'%start_date)    
+        print('TV count \t: %d'%tv_count)
+        print('Num days \t: %d'%num_days)    
+        
+        tv_fpath = '%s/%s/%s_tv_viewing_data.csv'%(path, ppt, ppt)
+        
+        tv_data = pd.read_csv(tv_fpath, delimiter=',')
+        tv_data['dateTimeStamp'] = pd.to_datetime(tv_data['dateTimeStamp'])
+        tv_data.set_index('dateTimeStamp', inplace=True)
+        
+        # remove tv columns that are not present (cols with -1 val)
+        for col in tv_data.columns:
+            val = tv_data[col].values
+            if (val==-1).sum() > 100:
+                tv_data.drop(columns=[col],inplace=True)
+        
+        tv_present = any(['tv' in col for col in tv_data.columns])
 
 
     ###### MOBILE DATA    
     ppt_mobile = mobile_details[mobile_details['ppt_id'] == int(ppt)]
     no_mobile = ppt_mobile['mobile_count'].values[0] < 1
-    assert ppt_mobile['start_date'].values[0]==start_date
-    
+    if tv_present:
+        assert ppt_mobile['start_date'].values[0]==start_date
+    else:
+        start_date = str(ppt_mobile['start_date'].values[0])
+        
     if not no_mobile:
-        m_df_5sec = get_mobile_data(path_mobile, num_days, ppt, ppt_mobile)
+        m_df_5sec, dev_stats = get_mobile_data(path_mobile, num_days, ppt, ppt_mobile)
+        miss_mobile = False
+        
+        # dev_stats is False, data missing
+        if not any(dev_stats):
+            miss_mobile = True
 
     ###### ACTIVITY DATA    
+    pa_fpath = '%s/PA Scored FLASH %s.csv'%(path_pa, ppt)
     pa_data = pd.read_csv(pa_fpath, delimiter=',')
     pa_data = pa_data[['DateTime','Non-Wear Time/Wear Time','Hand-Scored Wake/Sleep','Sadeh Wake/Sleep','PA Chandler 2015 8-12 yo S-L-MVPA VM']]
     pa_data.rename(columns={'Non-Wear Time/Wear Time': 'WearTime', 'Hand-Scored Wake/Sleep': 'HndScrSlp', 'Sadeh Wake/Sleep':'SadehSlp', 'PA Chandler 2015 8-12 yo S-L-MVPA VM':'ChandlerMVPA'}, inplace=True)
@@ -97,6 +110,12 @@ for ppt in ['568']: #mobile_details['ppt_id']:
     pa_data.set_index('DateTime', inplace=True)
     #print(pa_data)
     
+    if not tv_present:
+        start_dts = pd.to_datetime(ppt_mobile['start_date'].values[0]) #+ timedelta(days=day)
+        end_dts = start_dts + timedelta(days=num_days-1,hours=23,minutes=59,seconds=59)
+        tv_data = pd.DataFrame(index=pd.date_range(start=start_dts, end=end_dts, freq='5S'))
+        tv_data.index.name = 'dateTimeStamp'
+
     merged_df = tv_data.merge(pa_data, left_index=True, right_on='DateTime', how='left')
     if merged_df.index.name != 'DateTime':
         merged_df.set_index('DateTime', inplace=True)
@@ -121,7 +140,7 @@ for ppt in ['568']: #mobile_details['ppt_id']:
             tv_plot_data = tv1_plot_data + tv2_plot_data + tv3_plot_data
 
         # mobile data 
-        if not no_mobile:
+        if not no_mobile and not miss_mobile:
             day_mdf = m_df_5sec[start_dts:end_dts]
             m_data = day_mdf['user'].values
             tc_use = np.where(m_data==1)[0]
@@ -149,8 +168,11 @@ for ppt in ['568']: #mobile_details['ppt_id']:
             plt.eventplot(range(0,17280,2), colors=['k'], lineoffsets=[1],
                         linelengths=[0.8]*1)
                         
-        if no_mobile:
+        if no_mobile and not miss_mobile:
             plt.eventplot(range(0,17280,2), colors=['k'], lineoffsets=[0],
+                        linelengths=[0.8]*1)
+        elif miss_mobile:
+            plt.eventplot(range(0,17280,2), colors=['lightgray'], lineoffsets=[0],
                         linelengths=[0.8]*1)
         else:
             plt.eventplot(m_plot, colors=m_colors, lineoffsets=m_offset,

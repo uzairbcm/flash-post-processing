@@ -34,8 +34,14 @@ ppt_id = str(args.ppt_id)
 study4 = False
 if not study4:
     num_days = 10
-    redcap_data = pd.read_csv('TECHStudyTrackingShe_DATA_2024-04-17_1304.csv')
-    ppt_data = redcap_data[redcap_data['ptid']=='P1-' + ppt_id+'-A']
+    redcap_data = pd.read_csv('../../tech_data_post_processed/TECHStudyTrackingShe_DATA_2024-05-21_1246.csv')
+    
+    s = redcap_data['ptid']
+    if s[s.isin(['P1-' + ppt_id+'-A'])].empty:
+        ppt_data = redcap_data[redcap_data['ptid']=='P1-' + ppt_id]    
+    else:
+        ppt_data = redcap_data[redcap_data['ptid']=='P1-' + ppt_id+'-A']    
+    
     start_date = ppt_data.iloc[0]['first']
 
     tv_count_ls = [0,1,2,3]
@@ -46,7 +52,7 @@ if not study4:
         #print(tv_config)
 else:
     num_days = 3
-    with open('../../tech_data_post_processed//input/configs/%s.yaml'%ppt_id) as stream:
+    with open('../../tech_data_post_processed/input/configs/%s.yaml'%ppt_id) as stream:
         tv_config = yaml.safe_load(stream)    
     
     start_date = str(tv_config['start_date'])

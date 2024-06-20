@@ -127,8 +127,20 @@ def get_mobile_data(path_mobile, num_days, ppt, ppt_mobile):
     end_dts = start_dts + timedelta(days=num_days-1,hours=23,minutes=59,seconds=59)
     m_df_5sec = pd.DataFrame(index=pd.date_range(start=start_dts, end=end_dts, freq='5S'))
     
+    #print('Mobile data : ')    
+    dev_stats = []
+    user_5sec_devs = None
     for dev in range(count):
         mpath = '%s/%s_%s_final.csv'%(path_mobile,ppt,type_[dev].lower())
+        
+        if not os.path.exists(mpath):
+            dev_stats.append(False)
+            continue
+        else:
+            dev_stats.append(True)
+        
+        print('Dev-%02d : %s'%(dev+1, type_[dev]))    
+        
         m_df = pd.read_csv(mpath, delimiter=',')
         m_df['event_timestamp'] = pd.to_datetime(m_df['event_timestamp']).dt.tz_localize(None)
         m_df.set_index('event_timestamp', inplace=True)
@@ -149,10 +161,31 @@ def get_mobile_data(path_mobile, num_days, ppt, ppt_mobile):
             m_df_sec[strt:end] = row['user_val']
             
         user_sec = m_df_sec['user'].values       
+        
         user_5sec = condense_arr(user_sec, length=5, threshold=3, vals=[0,1,2],return_same=False)
+        if user_5sec_devs is None:
+            user_5sec_devs = user_5sec.copy()
+        else:
+            #user_5sec_devs = merge_mobile_use(user_5sec_devs, user_5sec)
+            comb_idx = 1*(user_5sec>0) * 1*(user_5sec_devs>0)
+            comb_idx = comb_idx==1
+            
+            user_5sec_devs[user_5sec_devs==0] = user_5sec[user_5sec_devs==0]
+            user_5sec_devs[comb_idx] = user_5sec[comb_idx]
+            
+            #comb == 0; replace with new one values
+            #comb > 0; replace with new ones nonzero values
+
         
-        m_df_5sec['user'] = user_5sec
+        print('Child use: %.2f'%((user_sec==1).sum()/60.0))
+        print('None  use: %.2f'%((user_sec==2).sum()/60.0))
+    
+    print('Total:')
+    print('Child use: %.2f'%((user_5sec_devs==1).sum()/12.0))
+    print('None  use: %.2f'%((user_5sec_devs==2).sum()/12.0))
         
-    return m_df_5sec
+    m_df_5sec['user'] = user_5sec_devs
+        
+    return m_df_5sec, dev_stats
     
 

@@ -189,6 +189,7 @@ def main(base_path, ppt_id, start_date, tv_data, num_days=10, study4=False):
         
         # Define the start and end dates of the powered down on a specific date
         if power_down:
+            
             for pd_data in power_down_data:
                 start_miss = datetime.strptime(pd_data[0],"%Y-%m-%d %H:%M:%S.%f")
                 end_miss = datetime.strptime(pd_data[1],"%Y-%m-%d %H:%M:%S.%f")
@@ -254,6 +255,7 @@ def main(base_path, ppt_id, start_date, tv_data, num_days=10, study4=False):
             tt = (tv_time_epc==1).sum()*5/60.0
             eo = (tv_exp_only_epc==1).sum()*5/60.0
             mo = (tv_time_epc==2).sum()*5/60.0
+            mo = mo + (tv_time_epc==3).sum()*5/60.0
             
             #print('TV time epc tv: \t%.2f'%tt)
             #print('TV exponly epc tv: \t%.2f'%eo)
