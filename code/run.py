@@ -24,8 +24,8 @@ parser.add_argument('--ppt_id', type=int,
                     default=None, help='4 digit participant ID')               
 parser.add_argument('--output', type=str,
                     default=None, help='the processed log is stored here if not specified it generates a name based on participant ID')
-#parser.add_argument('--outcsv', type=str,
-#                    default=None, help='csv file name')
+parser.add_argument('--datacsv', type=str,
+                    default=None, help='redcap data raw mode file path')
 
 
 args = parser.parse_args()
@@ -34,7 +34,7 @@ ppt_id = str(args.ppt_id)
 study4 = False
 if not study4:
     num_days = 10
-    redcap_data = pd.read_csv('../../tech_data_post_processed/TECHStudyTrackingShe_DATA_2024-05-21_1246.csv')
+    redcap_data = pd.read_csv(args.datacsv)
     
     s = redcap_data['ptid']
     if s[s.isin(['P1-' + ppt_id+'-A'])].empty:
