@@ -147,7 +147,7 @@ else:
 ####################################
 
 # save summaries
-outpath = os.path.join(args.output,ppt_id)
+outpath = os.path.join(args.output,'output',ppt_id)
 if not os.path.exists(outpath):
     os.makedirs(outpath)
     
