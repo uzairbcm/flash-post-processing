@@ -47,7 +47,7 @@ if not study4:
     tv_count_ls = [0,1,2,3]
     tv_count = ppt_data.iloc[0]['tvcount'] 
     tv_count = tv_count_ls[tv_count-1]
-    with open('../../tech_data_post_processed/input/configs/%s.yaml'%ppt_id) as stream:
+    with open('%s/input/configs/%s.yaml'%(args.output,ppt_id)) as stream:
         tv_config = yaml.safe_load(stream)    
         #print(tv_config)
 else:
