@@ -8,7 +8,7 @@ TV, Mobile, and Physical activity processing and plot codes
    - create a folder `input/configs`
    - create a folder `output`
  - Create a folder with just participant ID `1234` at the local path, say `datapath`
- - Download the participant data from the server to this folder
+   - Download the participant data from the server to this folder
    - Copy each device data zip folder format: `P1-1234XYZ_data.zip` where `XYZ` is the device ID. Extract the zip files
  - In each device data folder:
    - Move all the flash-tv txt logs files to a folder named `txts`
