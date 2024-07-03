@@ -4,5 +4,5 @@ TV, Mobile, and Physical activity processing and plot codes
 
  - For FLASH-TV check `code_tv`
  - For FLASH-Mobile check `code_mobile`
- - For Physical acitivity check ``
+ - For Plotting the combined screentime acitivity check `plot`
 
