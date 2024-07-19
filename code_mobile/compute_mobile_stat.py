@@ -8,8 +8,8 @@ import yaml
 from datetime import timedelta
 
 # Define paths
-path_mobile = 'C:/Users/u255769/Desktop/POSTPROCESS/flash-post-processing/mobile_data'
-mobile_details = 'C:/Users/u255769/Desktop/POSTPROCESS/flash-post-processing/mobile_data/study4_mobile_details.csv'
+path_mobile = 'flash-post-processing\code_mobile' #Replace with full path name 
+mobile_details = 'flash-post-processing\code_mobilestudy4_mobile_details.csv' #Replace with full path name
 num_days = 3
 
 # Load data
@@ -104,4 +104,4 @@ columns = ['FamID', 'MobileType'] + [f'Day-{i+1:02d}' for i in range(num_days)]
 df_compliance_all = pd.DataFrame(compliance_data_all, columns=columns)
 df_compliance_all.index.name = 'Index'
 print(df_compliance_all)
-df_compliance_all.to_csv('C:/Users/u255769/Desktop/POSTPROCESS/flash-post-processing/mobile_data/compliance_all_types.csv', sep=',')
+df_compliance_all.to_csv('compliance_all_types.csv', sep=',')
