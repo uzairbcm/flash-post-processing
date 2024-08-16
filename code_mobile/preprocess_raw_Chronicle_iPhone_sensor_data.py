@@ -81,7 +81,7 @@ def append_data(data, df_dts, sample_id, ppt):
     return data
 
 
-def process_raw_Chronicle_iPhone_sensor_data_files(
+def preprocess_raw_Chronicle_iPhone_sensor_data_files(
     *args,
     Chronicle_iPhone_sensor_data_folder: str,
     ignore_list: list,
@@ -274,7 +274,7 @@ if __name__ == "__main__":
         print("Please select the Chronicle iPhone sensor data folder using the folder dialog, or specify the path to the folder manually.")
         exit()
 
-    process_raw_Chronicle_iPhone_sensor_data_files(
+    preprocess_raw_Chronicle_iPhone_sensor_data_files(
         Chronicle_iPhone_sensor_data_folder = CHRONICLE_IPHONE_SENSOR_DATA_FOLDER,
         ignore_list = IGNORE_LIST,
         specific_date = None,
